@@ -7,7 +7,7 @@ import {
   ShieldCheck, 
   Download
 } from "lucide-react";
-import logoImg from "@assets/generated_images/minimalist_white_circular_logo_with_cross.png";
+import logoImg from "@assets/Pink_Black_and_White_Pixelated_Pixel_Dust_Marketing_Agency_Log_1766923995371.png";
 import xLogo from "@assets/X_logo_1766920324567.png";
 import linkedInLogo from "@assets/LinkedIn_logo_1766920324568.png";
 import instagramLogo from "@assets/1_1766923167507.png";
@@ -32,7 +32,7 @@ export default function Home() {
         <div className="md:hidden text-gray-300">Menu</div>
 
         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2">
-          <img src={logoImg} alt="VisaVet Logo" className="w-8 h-8 md:w-8 md:h-8 object-contain invert" />
+          <img src={logoImg} alt="VisaVet Logo" className="w-10 h-10 object-contain rounded-md" />
           <span className="font-bold text-lg tracking-tight hidden md:block">VisaVet</span>
         </div>
 
