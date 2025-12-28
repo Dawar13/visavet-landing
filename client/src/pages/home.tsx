@@ -20,6 +20,7 @@ import facebookLogo from "@assets/3_1766923167509.png";
 import planeImage from "@assets/download_(24)_1766925695539.jpg";
 import reportOverview from "@assets/88b3d51f-8147-4e27-9864-d93b0e1c8ef8_1766964196577.png";
 import instagramReport from "@assets/Screenshot_2025-12-29_044603_1766964207637.png";
+import sampleReportPdf from "@assets/Visavet_demo_report_1766966205759.pdf";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
@@ -289,7 +290,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="bg-[#050511] relative z-20 py-24 md:py-32 w-full">
+      <section id="how-it-works" className="bg-[#050511] relative z-20 py-12 md:py-16 w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             
@@ -475,35 +476,39 @@ export default function Home() {
       </section>
 
       {/* Sample Report Preview Section */}
-      <section className="relative z-20 py-24 w-full bg-[#050511] overflow-hidden">
-        <div className="relative max-w-5xl mx-auto h-[600px] flex justify-center items-center">
-          {/* Back Image (Instagram Review) */}
+      <section id="sample-report-preview" className="relative z-20 py-8 w-full bg-[#050511] overflow-hidden">
+        <div className="relative max-w-5xl mx-auto h-[550px] flex justify-center items-center px-4">
+          {/* Back Image (Instagram Review) - more visible */}
           <img
              src={instagramReport}
              alt="Instagram Deep-Dive Review"
-             className="absolute w-[80%] max-w-[800px] rounded-lg shadow-2xl transform -rotate-6 translate-x-12 translate-y-4 opacity-60"
+             className="absolute w-[75%] max-w-[700px] rounded-lg shadow-2xl transform -rotate-8 translate-x-24 md:translate-x-32 -translate-y-8 opacity-80"
           />
           {/* Front Image (Overview) */}
           <img
              src={reportOverview}
              alt="Public Digital Presence Assessment Report"
-             className="absolute w-[80%] max-w-[800px] rounded-lg shadow-2xl transform rotate-3 -translate-x-4 z-10"
+             className="absolute w-[75%] max-w-[700px] rounded-lg shadow-2xl transform rotate-2 -translate-x-16 md:-translate-x-24 translate-y-4 z-10"
           />
 
           {/* Gradient Blur Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-[#050511]/80 to-transparent z-20 flex items-end justify-center pb-20">
-             <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold text-sm transition-all shadow-lg shadow-blue-900/20 flex items-center gap-2">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-[#050511]/70 to-transparent z-20 flex items-end justify-center pb-16">
+             <a 
+               href={sampleReportPdf}
+               download="VisaVet_Sample_Report.pdf"
+               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold text-sm transition-all shadow-lg shadow-blue-900/20 flex items-center gap-2"
+             >
                <Download size={18} />
                Download sample report
-             </button>
+             </a>
           </div>
         </div>
       </section>
 
       {/* What We Review Section */}
-      <section id="what-we-review" className="relative z-20 py-32 w-full bg-gradient-to-b from-[#050511] via-[#0a0f2e] to-[#050511]">
+      <section id="what-we-review" className="relative z-20 py-16 w-full bg-gradient-to-b from-[#050511] via-[#0a0f2e] to-[#050511]">
          <div className="max-w-7xl mx-auto px-6 md:px-12">
-           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-20 text-center md:text-left">
+           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-12 text-center md:text-left">
              What We Review
            </h2>
 
@@ -511,7 +516,7 @@ export default function Home() {
               {reviewItems.map((item, index) => (
                 <Dialog key={index} open={openReview === index} onOpenChange={(open) => setOpenReview(open ? index : null)}>
                   <DialogTrigger asChild>
-                    <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500 cursor-pointer min-h-[160px] flex flex-col justify-center">
+                    <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 shadow-[0_0_25px_rgba(59,130,246,0.25)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transition-all duration-500 cursor-pointer min-h-[160px] flex flex-col justify-center border border-blue-400/20">
                       <h3 className="text-black font-bold text-sm mb-3">{item.title}</h3>
                       <p className="text-gray-600 text-xs leading-relaxed">{item.desc}</p>
                     </div>
@@ -534,8 +539,8 @@ export default function Home() {
       </section>
 
       {/* Client Reviews Section */}
-      <section id="reviews" className="relative z-20 py-32 w-full bg-[#050511] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16">
+      <section id="reviews" className="relative z-20 py-16 w-full bg-[#050511] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10">
            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white text-center md:text-left">
              Client Reviews
            </h2>
