@@ -13,11 +13,11 @@ import linkedInLogo from "@assets/LinkedIn_logo_1766920324568.png";
 import instagramLogo from "@assets/1_1766923167507.png";
 import redditLogo from "@assets/2_1766923167508.png";
 import facebookLogo from "@assets/3_1766923167509.png";
-
+import planeImage from "@assets/download_(24)_1766925695539.jpg";
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500/30 overflow-hidden">
+    <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full backdrop-blur-sm bg-[#050511]/50 md:bg-transparent">
@@ -43,9 +43,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="flex-grow flex flex-col items-center justify-center pt-32 pb-0 relative z-10 px-4 w-full">
-        
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center pt-32 pb-24 relative z-10 px-4 w-full min-h-[90vh]">
         {/* Hero Text */}
         <div className="text-center max-w-3xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 z-30 relative">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
@@ -202,14 +201,70 @@ export default function Home() {
           </div>
         </div>
 
-      </main>
+        {/* Giant Background Text */}
+        <div className="fixed bottom-[-6vw] left-0 right-0 text-center pointer-events-none z-0 select-none w-full flex justify-center">
+          <h1 className="text-[26vw] font-bold text-white leading-none tracking-tighter opacity-100 whitespace-nowrap">
+            VisaVet
+          </h1>
+        </div>
+      </section>
 
-      {/* Giant Background Text */}
-      <div className="fixed bottom-[-6vw] left-0 right-0 text-center pointer-events-none z-0 select-none w-full flex justify-center">
-         <h1 className="text-[26vw] font-bold text-white leading-none tracking-tighter opacity-100 whitespace-nowrap">
-           VisaVet
-         </h1>
-      </div>
+      {/* How It Works Section */}
+      <section className="bg-[#050511] relative z-20 py-24 md:py-32 w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            
+            {/* Left Column: Image */}
+            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:mx-0">
+               <img 
+                 src={planeImage} 
+                 alt="Plane flying between buildings" 
+                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 hover:opacity-100 transition-opacity duration-700"
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-transparent to-transparent opacity-30"></div>
+            </div>
+
+            {/* Right Column: Text Steps */}
+            <div className="relative">
+              {/* Ambient Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+              
+              <div className="relative z-10 space-y-16">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-12">
+                  How VisaVet Works
+                </h2>
+
+                <div className="space-y-12">
+                  {/* Step 1 */}
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-bold text-white">Share your public profiles</h3>
+                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
+                      You provide the social media platforms and public accounts you’ve used in the last few years.
+                    </p>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-bold text-white">Structured review process</h3>
+                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
+                      Your public online presence is reviewed using a mix of automated analysis and human evaluation.
+                    </p>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-bold text-white">Receive a detailed report</h3>
+                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
+                      You receive a clear, written report outlining observations, consistency checks, and advisory notes.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
     </div>
   );
