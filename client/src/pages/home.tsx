@@ -3,40 +3,17 @@ import {
   Battery, 
   Signal, 
   Wifi, 
-  X, 
   CheckCircle2, 
-  AlertTriangle, 
   ShieldCheck, 
-  FileText,
-  Download,
-  Facebook,
-  Linkedin,
-  Instagram,
-  Twitter
+  Download
 } from "lucide-react";
 import logoImg from "@assets/generated_images/minimalist_white_circular_logo_with_cross.png";
+import xLogo from "@assets/X_logo_1766920324567.png";
+import linkedInLogo from "@assets/LinkedIn_logo_1766920324568.png";
+import instagramLogo from "@assets/1_1766923167507.png";
+import redditLogo from "@assets/2_1766923167508.png";
+import facebookLogo from "@assets/3_1766923167509.png";
 
-// Custom Reddit Icon since it's not in the standard set used
-const RedditIcon = ({ size = 24, className = "" }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M17 13c0-1.7-1.3-3-3-3s-3 1.3-3 3c0 1.7 1.3 3 3 3s3-1.3 3-3z" />
-    <path d="M17 13v.01" />
-    <path d="M11 13v.01" />
-    <path d="M9 13c0-1.7-1.3-3-3-3s-3 1.3-3 3c0 1.7 1.3 3 3 3s3-1.3 3-3z" />
-  </svg>
-);
 
 export default function Home() {
   return (
@@ -183,12 +160,22 @@ export default function Home() {
                 <div className="glass-card rounded-2xl p-3 border border-white/5 flex items-center justify-between">
                    <div className="text-[10px] text-gray-400 font-medium rotate-180" style={{writingMode: 'vertical-rl'}}>INCLUDED</div>
                    <div className="h-8 w-[1px] bg-white/10 mx-1"></div>
-                   <div className="flex-1 flex justify-around items-center">
-                      <Twitter size={18} className="text-white fill-current" />
-                      <Instagram size={18} className="text-pink-500" />
-                      <Linkedin size={18} className="text-blue-400 fill-current" />
-                      <Facebook size={18} className="text-blue-600 fill-current" />
-                      <div className="bg-orange-500 rounded-full p-0.5"><RedditIcon size={14} className="text-white" /></div>
+                   <div className="flex-1 flex justify-around items-center px-1">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center overflow-hidden bg-black p-0.5">
+                        <img src={xLogo} alt="X" className="w-full h-full object-contain invert" />
+                      </div>
+                      <div className="w-6 h-6 rounded-md flex items-center justify-center overflow-hidden">
+                        <img src={instagramLogo} alt="Instagram" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="w-6 h-6 rounded-sm flex items-center justify-center overflow-hidden">
+                        <img src={linkedInLogo} alt="LinkedIn" className="w-full h-full object-contain" />
+                      </div>
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center overflow-hidden">
+                        <img src={facebookLogo} alt="Facebook" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center overflow-hidden">
+                         <img src={redditLogo} alt="Reddit" className="w-full h-full object-cover transform scale-110" />
+                      </div>
                    </div>
                 </div>
 
