@@ -18,6 +18,8 @@ import instagramLogo from "@assets/1_1766923167507.png";
 import redditLogo from "@assets/2_1766923167508.png";
 import facebookLogo from "@assets/3_1766923167509.png";
 import planeImage from "@assets/download_(24)_1766925695539.jpg";
+import reportOverview from "@assets/88b3d51f-8147-4e27-9864-d93b0e1c8ef8_1766964196577.png";
+import instagramReport from "@assets/Screenshot_2025-12-29_044603_1766964207637.png";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 
@@ -468,6 +470,32 @@ export default function Home() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Sample Report Preview Section */}
+      <section className="relative z-20 py-24 w-full bg-[#050511] overflow-hidden">
+        <div className="relative max-w-5xl mx-auto h-[600px] flex justify-center items-center">
+          {/* Back Image (Instagram Review) */}
+          <img
+             src={instagramReport}
+             alt="Instagram Deep-Dive Review"
+             className="absolute w-[80%] max-w-[800px] rounded-lg shadow-2xl transform -rotate-6 translate-x-12 translate-y-4 opacity-60"
+          />
+          {/* Front Image (Overview) */}
+          <img
+             src={reportOverview}
+             alt="Public Digital Presence Assessment Report"
+             className="absolute w-[80%] max-w-[800px] rounded-lg shadow-2xl transform rotate-3 -translate-x-4 z-10"
+          />
+
+          {/* Gradient Blur Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050511] via-[#050511]/80 to-transparent z-20 flex items-end justify-center pb-20">
+             <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold text-sm transition-all shadow-lg shadow-blue-900/20 flex items-center gap-2">
+               <Download size={18} />
+               Download sample report
+             </button>
           </div>
         </div>
       </section>
