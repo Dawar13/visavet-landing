@@ -1,28 +1,67 @@
 import { Link } from "wouter";
-import { ArrowUpRight, Battery, Signal, Wifi, X, TrendingUp, TrendingDown } from "lucide-react";
+import { 
+  Battery, 
+  Signal, 
+  Wifi, 
+  X, 
+  CheckCircle2, 
+  AlertTriangle, 
+  ShieldCheck, 
+  FileText,
+  Download,
+  Facebook,
+  Linkedin,
+  Instagram,
+  Twitter
+} from "lucide-react";
 import logoImg from "@assets/generated_images/minimalist_white_circular_logo_with_cross.png";
+
+// Custom Reddit Icon since it's not in the standard set used
+const RedditIcon = ({ size = 24, className = "" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M17 13c0-1.7-1.3-3-3-3s-3 1.3-3 3c0 1.7 1.3 3 3 3s3-1.3 3-3z" />
+    <path d="M17 13v.01" />
+    <path d="M11 13v.01" />
+    <path d="M9 13c0-1.7-1.3-3-3-3s-3 1.3-3 3c0 1.7 1.3 3 3 3s3-1.3 3-3z" />
+  </svg>
+);
 
 export default function Home() {
   return (
     <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500/30 overflow-hidden">
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full">
-        <div className="flex items-center gap-8">
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Investing ▾</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Cash</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Planning</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">About</Link>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full backdrop-blur-sm bg-[#050511]/50 md:bg-transparent">
+        <div className="flex items-center gap-8 hidden md:flex">
+          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">How It Works</Link>
+          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">What We Review</Link>
+          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Sample Report</Link>
+          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">FAQ</Link>
         </div>
+        
+        {/* Mobile Menu Placeholder (Simplified) */}
+        <div className="md:hidden text-gray-300">Menu</div>
 
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-          <img src={logoImg} alt="Swapify Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain invert" />
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2">
+          <img src={logoImg} alt="VisaVet Logo" className="w-8 h-8 md:w-8 md:h-8 object-contain invert" />
+          <span className="font-bold text-lg tracking-tight hidden md:block">VisaVet</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="#" className="text-white hover:text-gray-200 transition-colors text-sm font-medium">Sign In</Link>
           <Link href="#" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
-            Sign Up
+            Request Review
           </Link>
         </div>
       </nav>
@@ -31,36 +70,37 @@ export default function Home() {
       <main className="flex-grow flex flex-col items-center justify-center pt-32 pb-0 relative z-10 px-4 w-full">
         
         {/* Hero Text */}
-        <div className="text-center max-w-2xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 z-30 relative">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            Built, invest,<br />
-            adjust, enjoy.
+        <div className="text-center max-w-3xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 z-30 relative">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+            See What Your<br />
+            Online Presence Signals.
           </h1>
-          <p className="text-gray-400 text-sm md:text-base max-w-md mx-auto leading-relaxed mb-8">
-            Swapify is a comprehensive platform that enables users to 
-            effortlessly buy, trade, create, and secure their crypto assets.
+          <p className="text-gray-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-8">
+            A professional review of your public online presence
+            to understand how it may be viewed during your US visa screening
+            and identify any signals that could raise questions.
           </p>
 
           <div className="flex items-center justify-center gap-3">
-            <button className="bg-white text-black px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors">
-              Install Now
+            <button className="bg-white text-black px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center gap-2">
+              Request Review
             </button>
-            <button className="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
-              <X size={18} strokeWidth={2.5} />
+            <button className="glass text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-white/10 transition-colors">
+              View Sample
             </button>
           </div>
         </div>
 
         {/* Phone Mockup */}
-        <div className="relative mt-8 z-20 w-[300px] md:w-[340px] animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-200">
+        <div className="relative mt-4 z-20 w-[300px] md:w-[340px] animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-200">
           {/* Phone Frame */}
-          <div className="bg-[#0a0a16] rounded-[3rem] p-3 border-[6px] border-[#2a2a40] shadow-2xl relative overflow-hidden ring-1 ring-white/10">
+          <div className="bg-[#0a0a16] rounded-[3.5rem] p-3 border-[6px] border-[#2a2a40] shadow-2xl relative overflow-hidden ring-1 ring-white/10">
             {/* Screen */}
-            <div className="bg-gradient-to-br from-[#1e3c72] via-[#2a5298] to-[#000] h-[600px] rounded-[2.2rem] relative overflow-hidden flex flex-col">
+            <div className="bg-[#0f172a] h-[640px] rounded-[2.8rem] relative overflow-hidden flex flex-col">
               
-              {/* Internal Screen Background Overlay */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(56,92,246,0.3),transparent_70%)] pointer-events-none"></div>
-
+              {/* Internal Screen Background - Deep Blue Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-[#0f172a] to-[#0f172a] z-0"></div>
+              
               {/* Status Bar */}
               <div className="relative z-10 px-6 pt-5 flex justify-between items-center text-white text-xs font-medium">
                 <span>9:41</span>
@@ -71,67 +111,99 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Content Container */}
-              <div className="relative z-10 p-5 mt-12 space-y-4">
+              {/* App Content */}
+              <div className="relative z-10 p-5 mt-4 space-y-4 flex flex-col h-full">
                 
-                {/* Ethereum Card */}
-                <div className="glass-card rounded-2xl p-4 text-white relative overflow-hidden transform transition-transform hover:scale-[1.02] border border-white/10 shadow-lg shadow-black/20">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10">
-                        <svg viewBox="0 0 32 32" className="w-5 h-5 text-white fill-current">
-                           <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.994-15.781L16.498 4 9 16.22l7.498 4.353 7.496-4.354zM24 17.616l-7.502 4.351L9 17.617l7.498 10.378L24 17.616z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold">Ethereum</div>
-                        <div className="text-xs text-white/60">ETH</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-bold">$1,467.38</div>
-                      <div className="text-xs text-green-400 flex items-center justify-end gap-0.5">
-                         +7% <TrendingUp size={10} />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Fake Chart Line */}
-                  <svg className="w-full h-8 stroke-white/60 fill-none" viewBox="0 0 100 20" preserveAspectRatio="none">
-                    <path d="M0 10 C 20 15, 40 5, 50 10 S 80 15, 100 5" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                {/* Header Card */}
+                <div className="bg-blue-600 rounded-2xl p-4 text-white shadow-lg shadow-blue-900/20 relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-3 opacity-10">
+                     <ShieldCheck size={64} />
+                   </div>
+                   <div className="relative z-10">
+                     <div className="text-xs text-blue-200 uppercase tracking-wider font-semibold mb-1">Status: Completed</div>
+                     <div className="font-mono text-sm opacity-80 mb-2">Applicant ID: VV-1047</div>
+                     <div className="text-xs text-blue-100">Review Period: Last 5 years</div>
+                   </div>
                 </div>
 
-                {/* BinanceUSD Card */}
-                <div className="glass-card rounded-2xl p-4 text-white relative overflow-hidden transform translate-y-2 border border-white/10 shadow-lg shadow-black/20">
-                   <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center backdrop-blur-md border border-yellow-500/20">
-                        <svg viewBox="0 0 32 32" className="w-5 h-5 text-yellow-400 fill-current">
-                           <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm-3.884-17.59l-2.06 2.06 5.944 5.944 5.944-5.944-2.06-2.06-3.884 3.884-3.884-3.884zm0-3.884l3.884-3.884 3.884 3.884 2.06-2.06L16 2.522l-5.944 5.944 2.06 2.06z" />
-                        </svg>
+                {/* Dashboard Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                   {/* Coverage Metric */}
+                   <div className="glass-card rounded-2xl p-3 flex flex-col justify-between border border-white/5">
+                      <div className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Public Content</div>
+                      <div className="mt-2">
+                        <div className="text-2xl font-bold text-white">5</div>
+                        <div className="text-[10px] text-blue-300">Platforms found</div>
                       </div>
-                      <div>
-                        <div className="text-sm font-semibold">BinanceUSD</div>
-                        <div className="text-xs text-white/60">BUSD</div>
+                      <div className="mt-2 flex gap-1">
+                        <div className="h-1 flex-1 bg-green-500 rounded-full"></div>
+                        <div className="h-1 flex-1 bg-green-500 rounded-full"></div>
+                        <div className="h-1 flex-1 bg-green-500 rounded-full"></div>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-bold">$1.65</div>
-                      <div className="text-xs text-red-400 flex items-center justify-end gap-0.5">
-                         -0.1% <TrendingDown size={10} />
+                   </div>
+
+                   {/* Risk Metric */}
+                   <div className="glass-card rounded-2xl p-3 flex flex-col justify-between border border-white/5">
+                      <div className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Risk Signals</div>
+                      <div className="mt-2">
+                        <div className="text-2xl font-bold text-green-400">Low</div>
+                        <div className="text-[10px] text-gray-400">Observed</div>
                       </div>
-                    </div>
-                  </div>
-                  {/* Fake Chart Line */}
-                  <svg className="w-full h-8 stroke-white/40 fill-none" viewBox="0 0 100 20" preserveAspectRatio="none">
-                    <path d="M0 10 C 30 5, 60 15, 100 12" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                      <div className="mt-2 flex items-center gap-1 text-[10px] text-green-400">
+                        <CheckCircle2 size={10} />
+                        <span>Clear</span>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Profile Consistency Card */}
+                <div className="glass-card rounded-2xl p-4 border border-white/5">
+                   <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-xs font-semibold text-gray-200">Profile Consistency</h3>
+                      <span className="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">94% Match</span>
+                   </div>
+                   <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs text-gray-400">
+                        <span>Biographical Data</span>
+                        <div className="flex gap-0.5">
+                           {[1,2,3,4,5].map(i => <div key={i} className="w-4 h-1 bg-blue-500 rounded-sm"></div>)}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-gray-400">
+                        <span>Employment History</span>
+                         <div className="flex gap-0.5">
+                           {[1,2,3,4].map(i => <div key={i} className="w-4 h-1 bg-blue-500 rounded-sm"></div>)}
+                           <div className="w-4 h-1 bg-gray-700 rounded-sm"></div>
+                        </div>
+                      </div>
+                   </div>
+                </div>
+
+                 {/* Platforms Strip */}
+                <div className="glass-card rounded-2xl p-3 border border-white/5 flex items-center justify-between">
+                   <div className="text-[10px] text-gray-400 font-medium rotate-180" style={{writingMode: 'vertical-rl'}}>INCLUDED</div>
+                   <div className="h-8 w-[1px] bg-white/10 mx-1"></div>
+                   <div className="flex-1 flex justify-around items-center">
+                      <Twitter size={18} className="text-white fill-current" />
+                      <Instagram size={18} className="text-pink-500" />
+                      <Linkedin size={18} className="text-blue-400 fill-current" />
+                      <Facebook size={18} className="text-blue-600 fill-current" />
+                      <div className="bg-orange-500 rounded-full p-0.5"><RedditIcon size={14} className="text-white" /></div>
+                   </div>
+                </div>
+
+                {/* Download Button */}
+                <div className="mt-auto pb-8">
+                  <button className="w-full bg-white text-black py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors shadow-lg">
+                    <Download size={16} />
+                    Download Full Review (PDF)
+                  </button>
                 </div>
 
               </div>
 
               {/* Bottom Nav on Phone */}
-              <div className="absolute bottom-4 left-0 right-0 px-8 flex justify-center items-center text-white/50">
+              <div className="absolute bottom-2 left-0 right-0 px-8 flex justify-center items-center text-white/50 pb-2">
                  <div className="w-32 h-1 bg-white/20 rounded-full"></div>
               </div>
 
@@ -148,7 +220,7 @@ export default function Home() {
       {/* Giant Background Text */}
       <div className="fixed bottom-[-6vw] left-0 right-0 text-center pointer-events-none z-0 select-none w-full flex justify-center">
          <h1 className="text-[26vw] font-bold text-white leading-none tracking-tighter opacity-100 whitespace-nowrap">
-           Swapify
+           VisaVet
          </h1>
       </div>
 
