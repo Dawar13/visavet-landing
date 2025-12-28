@@ -5,7 +5,8 @@ import {
   Wifi, 
   CheckCircle2, 
   ShieldCheck, 
-  Download
+  Download,
+  Info
 } from "lucide-react";
 import logoImg from "@assets/Pink_Black_and_White_Pixelated_Pixel_Dust_Marketing_Agency_Log_1766923995371.png";
 import xLogo from "@assets/X_logo_1766920324567.png";
@@ -14,9 +15,12 @@ import instagramLogo from "@assets/1_1766923167507.png";
 import redditLogo from "@assets/2_1766923167508.png";
 import facebookLogo from "@assets/3_1766923167509.png";
 import planeImage from "@assets/download_(24)_1766925695539.jpg";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
 export default function Home() {
   const [location, setLocation] = useLocation();
+  const [openStep, setOpenStep] = useState<number | null>(null);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -240,34 +244,160 @@ export default function Home() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
               
               <div className="relative z-10 space-y-16">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-12">
-                  How VisaVet Works
-                </h2>
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+                    How VisaVet Works
+                  </h2>
+                  <p className="text-gray-400 text-sm md:text-base">
+                    A structured, context-aware review — not a scan.
+                  </p>
+                </div>
 
-                <div className="space-y-12">
+                <div className="space-y-8">
                   {/* Step 1 */}
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-white">Share your public profiles</h3>
-                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
-                      You provide the social media platforms and public accounts you’ve used in the last few years.
-                    </p>
-                  </div>
+                  <Dialog open={openStep === 1} onOpenChange={(open) => setOpenStep(open ? 1 : null)}>
+                    <DialogTrigger asChild>
+                      <div className="group cursor-pointer rounded-xl p-6 transition-all duration-300 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] border border-transparent hover:border-white/10">
+                        <div className="space-y-2">
+                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Tell Us Your Context</h3>
+                          <p className="text-gray-400 text-base leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors">
+                            You share your background, visa type, and public profiles — the same way an officer sees your case.
+                          </p>
+                          <div className="pt-2 flex items-center text-blue-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300">
+                             <Info size={14} className="mr-2" /> Learn more
+                          </div>
+                        </div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="bg-white text-black border-none max-w-lg p-8 rounded-2xl">
+                      <div className="space-y-6">
+                         <h3 className="text-2xl font-bold">Tell Us Your Context</h3>
+                         
+                         <div className="space-y-4">
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">Why this matters</h4>
+                              <p className="text-gray-700 leading-relaxed">Visa screening is contextual. The same online activity can be interpreted very differently depending on visa category, travel history, and stated intent.</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">What you provide</h4>
+                              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                                <li>Visa category you’re applying for</li>
+                                <li>High-level purpose of travel</li>
+                                <li>Public social media platforms used</li>
+                                <li>Optional context you would otherwise explain in an interview</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">How this is used</h4>
+                              <p className="text-gray-700 leading-relaxed">This information frames how your public digital presence is interpreted — not judged in isolation.</p>
+                            </div>
+                         </div>
+                         
+                         <div className="pt-4 flex justify-end">
+                            <button onClick={() => setOpenStep(null)} className="text-sm font-semibold text-gray-500 hover:text-black transition-colors">Close</button>
+                         </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
 
                   {/* Step 2 */}
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-white">Structured review process</h3>
-                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
-                      Your public online presence is reviewed using a mix of automated analysis and human evaluation.
-                    </p>
-                  </div>
+                  <Dialog open={openStep === 2} onOpenChange={(open) => setOpenStep(open ? 2 : null)}>
+                    <DialogTrigger asChild>
+                      <div className="group cursor-pointer rounded-xl p-6 transition-all duration-300 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] border border-transparent hover:border-white/10">
+                        <div className="space-y-2">
+                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Structured Digital Review</h3>
+                          <p className="text-gray-400 text-base leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors">
+                            Your public online presence is reviewed the way modern screening systems interpret it.
+                          </p>
+                           <div className="pt-2 flex items-center text-blue-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300">
+                             <Info size={14} className="mr-2" /> Learn more
+                          </div>
+                        </div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="bg-white text-black border-none max-w-lg p-8 rounded-2xl">
+                       <div className="space-y-6">
+                         <h3 className="text-2xl font-bold">Structured Digital Review</h3>
+                         
+                         <div className="space-y-4">
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">How the review is done</h4>
+                              <p className="text-gray-700 leading-relaxed">We combine automated pattern analysis with human evaluation to review your publicly visible digital footprint.</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">What is examined</h4>
+                              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                                <li>Consistency across platforms</li>
+                                <li>Public biographical signals</li>
+                                <li>Timeline alignment</li>
+                                <li>Language tone and associations</li>
+                                <li>Public visibility and discoverability</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">What this is not</h4>
+                              <p className="text-gray-700 leading-relaxed">This is not keyword hunting, sentiment scoring, or automated flagging. Context and interpretation matter.</p>
+                            </div>
+                         </div>
+                         
+                         <div className="pt-4 flex justify-end">
+                            <button onClick={() => setOpenStep(null)} className="text-sm font-semibold text-gray-500 hover:text-black transition-colors">Close</button>
+                         </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
 
                   {/* Step 3 */}
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-white">Receive a detailed report</h3>
-                    <p className="text-gray-400 text-base leading-relaxed max-w-sm">
-                      You receive a clear, written report outlining observations, consistency checks, and advisory notes.
-                    </p>
-                  </div>
+                  <Dialog open={openStep === 3} onOpenChange={(open) => setOpenStep(open ? 3 : null)}>
+                    <DialogTrigger asChild>
+                      <div className="group cursor-pointer rounded-xl p-6 transition-all duration-300 hover:bg-white/5 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] border border-transparent hover:border-white/10">
+                        <div className="space-y-2">
+                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Receive a Human-Written Report</h3>
+                          <p className="text-gray-400 text-base leading-relaxed max-w-sm group-hover:text-gray-300 transition-colors">
+                            You receive a written report — clear, calm, and actionable.
+                          </p>
+                           <div className="pt-2 flex items-center text-blue-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300">
+                             <Info size={14} className="mr-2" /> Learn more
+                          </div>
+                        </div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="bg-white text-black border-none max-w-lg p-8 rounded-2xl">
+                       <div className="space-y-6">
+                         <h3 className="text-2xl font-bold">Receive a Human-Written Report</h3>
+                         
+                         <div className="space-y-4">
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">What you receive</h4>
+                              <p className="text-gray-700 leading-relaxed mb-2">A structured report outlining:</p>
+                              <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                                <li>Observations (what is visible)</li>
+                                <li>Consistency checks (what aligns or conflicts)</li>
+                                <li>Advisory notes (what to be mindful of)</li>
+                              </ul>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">How it helps</h4>
+                              <p className="text-gray-700 leading-relaxed">The report helps you understand how your public presence may appear during visa screening — before it’s evaluated officially.</p>
+                            </div>
+
+                            <div>
+                              <h4 className="font-bold text-sm uppercase tracking-wider text-blue-600 mb-2">What we don’t do</h4>
+                              <p className="text-gray-700 leading-relaxed">We don’t predict outcomes, assign scores, or promise approvals.</p>
+                            </div>
+                         </div>
+                         
+                         <div className="pt-4 flex justify-end">
+                            <button onClick={() => setOpenStep(null)} className="text-sm font-semibold text-gray-500 hover:text-black transition-colors">Close</button>
+                         </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             </div>
@@ -277,9 +407,9 @@ export default function Home() {
       </section>
 
       {/* What We Review Section */}
-      <section id="what-we-review" className="relative z-20 py-24 w-full bg-gradient-to-b from-[#050511] via-[#0a0f2e] to-[#050511]">
+      <section id="what-we-review" className="relative z-20 py-32 w-full bg-gradient-to-b from-[#050511] via-[#0a0f2e] to-[#050511]">
          <div className="max-w-7xl mx-auto px-6 md:px-12">
-           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-16 text-center md:text-left">
+           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-20 text-center md:text-left">
              What We Review
            </h2>
 
@@ -312,9 +442,9 @@ export default function Home() {
       </section>
 
       {/* Client Reviews Section */}
-      <section id="reviews" className="relative z-20 py-24 w-full bg-[#050511] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
-           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white text-center md:text-left">
+      <section id="reviews" className="relative z-20 py-32 w-full bg-[#050511] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16">
+           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white text-center md:text-left">
              Client Reviews
            </h2>
         </div>
@@ -323,18 +453,16 @@ export default function Home() {
         <div className="relative w-full overflow-hidden">
            <div className="flex animate-marquee hover:[animation-play-state:paused] w-max gap-8 px-8">
               {[
-                { quote: "The report was clear and detailed. It helped me understand what information was visible online.", role: "F-1 Applicant" },
-                { quote: "I appreciated that the review felt thoughtful and not automated. It gave me clarity without making promises.", role: "H-1B Applicant" },
-                { quote: "The process was professional and reassuring. The report helped us feel more prepared.", role: "Parent of Student" },
-                { quote: "Highly professional service. They identified old accounts I had completely forgotten about.", role: "J-1 Applicant" },
-                { quote: "It gave me peace of mind knowing exactly what is out there before my interview.", role: "O-1 Applicant" },
-                 { quote: "The report was clear and detailed. It helped me understand what information was visible online.", role: "F-1 Applicant" },
-                { quote: "I appreciated that the review felt thoughtful and not automated. It gave me clarity without making promises.", role: "H-1B Applicant" },
-                { quote: "The process was professional and reassuring. The report helped us feel more prepared.", role: "Parent of Student" },
+                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", role: "F-1 Applicant" },
+                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", role: "H-1B Applicant" },
+                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", role: "Parent of Graduate Student" },
+                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", role: "F-1 Applicant" },
+                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", role: "H-1B Applicant" },
+                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", role: "Parent of Graduate Student" },
               ].map((review, i) => (
-                <div key={i} className="bg-[#0f1225] border border-white/5 rounded-xl p-8 w-[350px] flex-shrink-0">
-                   <p className="text-gray-300 text-sm leading-relaxed mb-6">"{review.quote}"</p>
-                   <div className="text-blue-400 text-xs font-semibold uppercase tracking-wider">{review.role}</div>
+                <div key={i} className="bg-blue-600 border border-blue-500/30 shadow-[0_0_20px_rgba(255,255,255,0.1)] rounded-xl p-8 w-[400px] flex-shrink-0">
+                   <p className="text-white text-sm leading-relaxed mb-6 font-medium">"{review.quote}"</p>
+                   <div className="text-blue-100 text-xs font-bold uppercase tracking-wider">{review.role}</div>
                 </div>
               ))}
            </div>
