@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { 
   Battery, 
   Signal, 
@@ -16,40 +16,50 @@ import facebookLogo from "@assets/3_1766923167509.png";
 import planeImage from "@assets/download_(24)_1766925695539.jpg";
 
 export default function Home() {
+  const [location, setLocation] = useLocation();
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full backdrop-blur-sm bg-[#050511]/50 md:bg-transparent">
         <div className="flex items-center gap-8 hidden md:flex">
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">How It Works</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">What We Review</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Sample Report</Link>
-          <Link href="#" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">FAQ</Link>
+          <button onClick={() => scrollToSection('how-it-works')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">How It Works</button>
+          <button onClick={() => scrollToSection('what-we-review')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">What We Review</button>
+          <button onClick={() => scrollToSection('sample-report')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Sample Report</button>
+          <button onClick={() => scrollToSection('reviews')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Client Reviews</button>
         </div>
         
         {/* Mobile Menu Placeholder (Simplified) */}
         <div className="md:hidden text-gray-300">Menu</div>
 
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2">
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logoImg} alt="VisaVet Logo" className="w-10 h-10 object-contain rounded-md" />
           <span className="font-bold text-lg tracking-tight hidden md:block">VisaVet</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="#" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
             Request Review
-          </Link>
+          </button>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center pt-32 pb-24 relative z-10 px-4 w-full min-h-[90vh]">
         {/* Hero Text */}
-        <div className="text-center max-w-3xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 z-30 relative">
+        <div className="text-center max-w-4xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 z-30 relative">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
             See What Your<br />
-            Online Presence Signals.
+            Online Presence Signals<br />
+            for your <span className="text-blue-500 drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]">VISA.</span>
           </h1>
           <p className="text-gray-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed mb-8">
             A professional review of your public online presence
@@ -68,7 +78,7 @@ export default function Home() {
         </div>
 
         {/* Phone Mockup */}
-        <div className="relative mt-4 z-20 w-[300px] md:w-[340px] animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-200">
+        <div id="sample-report" className="relative mt-4 z-20 w-[300px] md:w-[340px] animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-200">
           {/* Phone Frame */}
           <div className="bg-[#0a0a16] rounded-[3.5rem] p-3 border-[6px] border-[#2a2a40] shadow-2xl relative overflow-hidden ring-1 ring-white/10">
             {/* Screen */}
@@ -210,7 +220,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="bg-[#050511] relative z-20 py-24 md:py-32 w-full">
+      <section id="how-it-works" className="bg-[#050511] relative z-20 py-24 md:py-32 w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             
@@ -263,6 +273,71 @@ export default function Home() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* What We Review Section */}
+      <section id="what-we-review" className="relative z-20 py-24 w-full bg-gradient-to-b from-[#050511] via-[#0a0f2e] to-[#050511]">
+         <div className="max-w-7xl mx-auto px-6 md:px-12">
+           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-16 text-center md:text-left">
+             What We Review
+           </h2>
+
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: "Public social media posts", desc: "We review publicly visible posts across major platforms." },
+                { title: "Profile biographies", desc: "Bios are checked for consistency and clarity." },
+                { title: "Usernames and identifiers", desc: "We look at how identifiers appear across platforms." },
+                { title: "Employment references", desc: "Public mentions of work history are reviewed." },
+                { title: "Education references", desc: "Publicly stated education details are checked." },
+                { title: "Location indicators", desc: "Public location signals are reviewed for consistency." },
+                { title: "Public comments", desc: "Visible interactions are included in the review." },
+                { title: "Shared links and content", desc: "Frequently shared content is reviewed at a high level." },
+                { title: "Group associations", desc: "Public group affiliations are considered." },
+                { title: "Account visibility", desc: "We confirm what information is publicly accessible." },
+                { title: "Timeline consistency", desc: "Public timelines are reviewed for alignment." },
+                { title: "Language tone", desc: "General tone is reviewed contextually." },
+                { title: "Public profile images", desc: "Profile images are reviewed as part of identity context." },
+                { title: "Activity frequency", desc: "Activity patterns are observed at a high level." },
+                { title: "Search visibility", desc: "We check what appears when names are searched publicly." },
+                { title: "General footprint", desc: "A summary view of overall public presence." },
+              ].map((item, index) => (
+                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-lg p-6 shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] transition-shadow duration-500">
+                  <h3 className="text-black font-bold text-sm mb-2">{item.title}</h3>
+                  <p className="text-gray-600 text-xs leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+           </div>
+         </div>
+      </section>
+
+      {/* Client Reviews Section */}
+      <section id="reviews" className="relative z-20 py-24 w-full bg-[#050511] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white text-center md:text-left">
+             Client Reviews
+           </h2>
+        </div>
+
+        {/* Marquee Container */}
+        <div className="relative w-full overflow-hidden">
+           <div className="flex animate-marquee hover:[animation-play-state:paused] w-max gap-8 px-8">
+              {[
+                { quote: "The report was clear and detailed. It helped me understand what information was visible online.", role: "F-1 Applicant" },
+                { quote: "I appreciated that the review felt thoughtful and not automated. It gave me clarity without making promises.", role: "H-1B Applicant" },
+                { quote: "The process was professional and reassuring. The report helped us feel more prepared.", role: "Parent of Student" },
+                { quote: "Highly professional service. They identified old accounts I had completely forgotten about.", role: "J-1 Applicant" },
+                { quote: "It gave me peace of mind knowing exactly what is out there before my interview.", role: "O-1 Applicant" },
+                 { quote: "The report was clear and detailed. It helped me understand what information was visible online.", role: "F-1 Applicant" },
+                { quote: "I appreciated that the review felt thoughtful and not automated. It gave me clarity without making promises.", role: "H-1B Applicant" },
+                { quote: "The process was professional and reassuring. The report helped us feel more prepared.", role: "Parent of Student" },
+              ].map((review, i) => (
+                <div key={i} className="bg-[#0f1225] border border-white/5 rounded-xl p-8 w-[350px] flex-shrink-0">
+                   <p className="text-gray-300 text-sm leading-relaxed mb-6">"{review.quote}"</p>
+                   <div className="text-blue-400 text-xs font-semibold uppercase tracking-wider">{review.role}</div>
+                </div>
+              ))}
+           </div>
         </div>
       </section>
 
