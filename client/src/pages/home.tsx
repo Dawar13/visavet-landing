@@ -6,7 +6,10 @@ import {
   CheckCircle2, 
   ShieldCheck, 
   Download,
-  Info
+  Info,
+  Menu,
+  X as XIcon,
+  User
 } from "lucide-react";
 import logoImg from "@assets/Pink_Black_and_White_Pixelated_Pixel_Dust_Marketing_Agency_Log_1766923995371.png";
 import xLogo from "@assets/X_logo_1766920324567.png";
@@ -21,19 +24,65 @@ import { useState } from "react";
 export default function Home() {
   const [location, setLocation] = useLocation();
   const [openStep, setOpenStep] = useState<number | null>(null);
+  const [openReview, setOpenReview] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
     }
   };
+
+  const reviewItems = [
+    { 
+      title: "Public Posts & Content", 
+      desc: "Visible posts, captions, and shared content that contribute to your public narrative.",
+      detail: "We review publicly visible posts, captions, shared media, and text content across disclosed platforms. The focus is not on volume or frequency, but on the overall narrative created by what is visible.\n\nThis includes how topics, tone, and themes appear when viewed together rather than in isolation. Content is interpreted in context, accounting for time, platform norms, and relevance to your stated background.\n\nThe goal is to identify whether your public content presents a clear, neutral, and coherent public presence when reviewed at face value."
+    },
+    { 
+      title: "Profile Bios & Descriptions", 
+      desc: "How your self-descriptions align across platforms and with your application story.",
+      detail: "We examine profile bios, headlines, and self-descriptions across platforms to assess how consistently you describe yourself publicly.\n\nThis includes education, professional identity, affiliations, and role descriptions, and whether these align with each other and with the information typically presented in visa applications.\n\nInconsistencies are not treated as errors by default, but are noted where they could create ambiguity or confusion in a formal review setting."
+    },
+    { 
+      title: "Timeline Consistency", 
+      desc: "Public activity patterns that align with stated education, work, and travel history.",
+      detail: "We assess whether publicly visible activity patterns align broadly with your stated education, work history, and travel timeline.\n\nThis does not involve assumptions about private activity. Instead, we look at whether public signals create a reasonable and internally consistent timeline when viewed externally.\n\nThis step helps identify areas where additional clarification or context may be useful."
+    },
+    { 
+      title: "Platform Cross-Alignment", 
+      desc: "Whether different platforms tell a coherent and consistent story.",
+      detail: "Different platforms often serve different purposes. We review how your presence appears when platforms are viewed together, rather than individually.\n\nThis includes differences in tone, identity presentation, and level of formality, and whether these variations still form a coherent overall profile.\n\nThe aim is not uniformity, but recognizability and consistency at a high level."
+    },
+    { 
+      title: "Visible Affiliations", 
+      desc: "Publicly visible groups, pages, or interests you are associated with.",
+      detail: "We review publicly visible groups, pages, follows, and stated interests where accessible.\n\nThis review focuses on visibility and association, not private beliefs or intent. Affiliations are considered in context and without inference beyond what is publicly displayed.\n\nOnly clearly visible, public associations are included in this assessment."
+    },
+    { 
+      title: "Interaction Patterns", 
+      desc: "How public comments, reactions, and engagements appear in context.",
+      detail: "We examine publicly visible comments, reactions, and engagements to understand how interactions appear when viewed collectively.\n\nThis includes tone, frequency, and context, without attempting to interpret private meaning or intent.\n\nThe purpose is to assess whether public interactions contribute to a stable and professional outward presence."
+    },
+    { 
+      title: "Name & Identity Signals", 
+      desc: "Username choices, naming consistency, and recognizability across platforms.",
+      detail: "We review usernames, display names, and profile identifiers to understand how easily your identity can be recognized and linked across platforms.\n\nThis includes name consistency, recognizability, and whether profiles clearly appear to belong to the same individual.\n\nThis step helps assess clarity of public identity, not exposure level."
+    },
+    { 
+      title: "Overall Public Visibility", 
+      desc: "The level and nature of what is publicly accessible at the time of review.",
+      detail: "We assess the overall level of public exposure at the time of review — what is visible, how easily accessible it is, and how it appears when viewed as a whole.\n\nThis is not a judgment of privacy choices. Instead, it documents the scope of publicly accessible information and how it presents externally.\n\nThe outcome is a neutral visibility snapshot rather than a score or label."
+    },
+  ];
 
   return (
     <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500/30 overflow-x-hidden">
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full backdrop-blur-sm bg-[#050511]/50 md:bg-transparent">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto w-full backdrop-blur-sm bg-[#050511]/90 md:bg-[#050511]/50 md:backdrop-blur-sm border-b border-white/5 md:border-none transition-all duration-300">
         <div className="flex items-center gap-8 hidden md:flex">
           <button onClick={() => scrollToSection('how-it-works')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">How It Works</button>
           <button onClick={() => scrollToSection('what-we-review')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">What We Review</button>
@@ -41,8 +90,10 @@ export default function Home() {
           <button onClick={() => scrollToSection('reviews')} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Client Reviews</button>
         </div>
         
-        {/* Mobile Menu Placeholder (Simplified) */}
-        <div className="md:hidden text-gray-300">Menu</div>
+        {/* Mobile Menu Button */}
+        <div className="md:hidden text-gray-300 cursor-pointer" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <XIcon size={24} /> : <Menu size={24} />}
+        </div>
 
         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logoImg} alt="VisaVet Logo" className="w-10 h-10 object-contain rounded-md" />
@@ -50,11 +101,23 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 md:px-5 py-2 rounded-full text-xs md:text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
             Request Review
           </button>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-[#050511] pt-24 px-6 md:hidden animate-in slide-in-from-top-10 duration-200">
+           <div className="flex flex-col gap-6 text-lg">
+              <button onClick={() => scrollToSection('how-it-works')} className="text-left text-gray-300 hover:text-white border-b border-white/10 pb-4">How It Works</button>
+              <button onClick={() => scrollToSection('what-we-review')} className="text-left text-gray-300 hover:text-white border-b border-white/10 pb-4">What We Review</button>
+              <button onClick={() => scrollToSection('sample-report')} className="text-left text-gray-300 hover:text-white border-b border-white/10 pb-4">Sample Report</button>
+              <button onClick={() => scrollToSection('reviews')} className="text-left text-gray-300 hover:text-white border-b border-white/10 pb-4">Client Reviews</button>
+           </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center pt-32 pb-24 relative z-10 px-4 w-full min-h-[90vh]">
@@ -245,11 +308,14 @@ export default function Home() {
               
               <div className="relative z-10 space-y-16">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+                  <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                     How VisaVet Works
                   </h2>
-                  <p className="text-gray-400 text-sm md:text-base">
-                    A structured, context-aware review — not a scan.
+                  <p className="text-blue-400 text-sm md:text-base font-medium mb-4">
+                    Not an automated scan or AI summary.
+                  </p>
+                  <p className="text-gray-400 text-sm md:text-base leading-relaxed opacity-0 animate-in slide-in-from-left-3 fade-in duration-700 fill-mode-forwards" style={{ animationDelay: '150ms' }}>
+                    Each review combines technology-assisted analysis with careful human evaluation, reflecting how modern visa screening interprets public digital signals.
                   </p>
                 </div>
 
@@ -414,28 +480,26 @@ export default function Home() {
            </h2>
 
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { title: "Public social media posts", desc: "We review publicly visible posts across major platforms." },
-                { title: "Profile biographies", desc: "Bios are checked for consistency and clarity." },
-                { title: "Usernames and identifiers", desc: "We look at how identifiers appear across platforms." },
-                { title: "Employment references", desc: "Public mentions of work history are reviewed." },
-                { title: "Education references", desc: "Publicly stated education details are checked." },
-                { title: "Location indicators", desc: "Public location signals are reviewed for consistency." },
-                { title: "Public comments", desc: "Visible interactions are included in the review." },
-                { title: "Shared links and content", desc: "Frequently shared content is reviewed at a high level." },
-                { title: "Group associations", desc: "Public group affiliations are considered." },
-                { title: "Account visibility", desc: "We confirm what information is publicly accessible." },
-                { title: "Timeline consistency", desc: "Public timelines are reviewed for alignment." },
-                { title: "Language tone", desc: "General tone is reviewed contextually." },
-                { title: "Public profile images", desc: "Profile images are reviewed as part of identity context." },
-                { title: "Activity frequency", desc: "Activity patterns are observed at a high level." },
-                { title: "Search visibility", desc: "We check what appears when names are searched publicly." },
-                { title: "General footprint", desc: "A summary view of overall public presence." },
-              ].map((item, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-lg p-6 shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] transition-shadow duration-500">
-                  <h3 className="text-black font-bold text-sm mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-xs leading-relaxed">{item.desc}</p>
-                </div>
+              {reviewItems.map((item, index) => (
+                <Dialog key={index} open={openReview === index} onOpenChange={(open) => setOpenReview(open ? index : null)}>
+                  <DialogTrigger asChild>
+                    <div className="bg-white/95 backdrop-blur-sm rounded-lg p-8 shadow-[0_0_20px_rgba(59,130,246,0.1)] hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500 cursor-pointer min-h-[160px] flex flex-col justify-center">
+                      <h3 className="text-black font-bold text-sm mb-3">{item.title}</h3>
+                      <p className="text-gray-600 text-xs leading-relaxed">{item.desc}</p>
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="bg-white text-black border-none max-w-lg p-8 rounded-2xl">
+                     <div className="space-y-4">
+                        <h3 className="text-xl font-bold">{item.title}</h3>
+                        <div className="text-gray-700 leading-relaxed whitespace-pre-line text-sm">
+                          {item.detail}
+                        </div>
+                        <div className="pt-4 flex justify-end">
+                          <button onClick={() => setOpenReview(null)} className="text-sm font-semibold text-gray-500 hover:text-black transition-colors">Close</button>
+                        </div>
+                     </div>
+                  </DialogContent>
+                </Dialog>
               ))}
            </div>
          </div>
@@ -453,16 +517,26 @@ export default function Home() {
         <div className="relative w-full overflow-hidden">
            <div className="flex animate-marquee hover:[animation-play-state:paused] w-max gap-8 px-8">
               {[
-                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", role: "F-1 Applicant" },
-                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", role: "H-1B Applicant" },
-                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", role: "Parent of Graduate Student" },
-                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", role: "F-1 Applicant" },
-                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", role: "H-1B Applicant" },
-                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", role: "Parent of Graduate Student" },
+                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", name: "Ananya R.", role: "F-1 Applicant" },
+                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", name: "Divesh K.", role: "H-1B Renewal" },
+                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", name: "Rohit A.", role: "Parent of Graduate Student" },
+                { quote: "Professional and discreet. They found an old account I had completely forgotten about.", name: "Sarah M.", role: "O-1 Applicant" },
+                { quote: "Clear, actionable advice. I feel much more prepared for my interview now.", name: "Michael T.", role: "B1/B2 Visitor" },
+                { quote: "The process felt thoughtful and measured. The report didn’t rush to conclusions, which made it easier to trust.", name: "Ananya R.", role: "F-1 Applicant" },
+                { quote: "What stood out was the context. It wasn’t just about posts, but how everything fits together.", name: "Divesh K.", role: "H-1B Renewal" },
+                { quote: "This felt closer to an advisory service than a tool. That mattered to us.", name: "Rohit A.", role: "Parent of Graduate Student" },
               ].map((review, i) => (
-                <div key={i} className="bg-blue-600 border border-blue-500/30 shadow-[0_0_20px_rgba(255,255,255,0.1)] rounded-xl p-8 w-[400px] flex-shrink-0">
-                   <p className="text-white text-sm leading-relaxed mb-6 font-medium">"{review.quote}"</p>
-                   <div className="text-blue-100 text-xs font-bold uppercase tracking-wider">{review.role}</div>
+                <div key={i} className="bg-blue-600 border border-blue-500/30 shadow-[0_0_30px_rgba(255,255,255,0.15)] rounded-xl p-8 w-[450px] flex-shrink-0 transition-transform hover:scale-[1.01]">
+                   <p className="text-white text-base leading-relaxed mb-6 font-medium">"{review.quote}"</p>
+                   <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/50 flex items-center justify-center">
+                        <User size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white font-bold text-sm">{review.name}</div>
+                        <div className="text-blue-200 text-xs uppercase tracking-wider">{review.role}</div>
+                      </div>
+                   </div>
                 </div>
               ))}
            </div>
