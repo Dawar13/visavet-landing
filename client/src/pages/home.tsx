@@ -24,21 +24,13 @@ import sampleReportPdf from "@assets/Visavet_demo_report_1766966205759.pdf";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState, useEffect, useRef } from "react";
 
-function useCountUp(end: number, duration: number = 2000, startOnView: boolean = true) {
-  const [count, setCount] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+function MetricsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [counts, setCounts] = useState({ profiles: 0, years: 0, detection: 0 });
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    if (!startOnView) {
-      setHasStarted(true);
-    }
-  }, [startOnView]);
-
-  useEffect(() => {
-    if (!startOnView || hasStarted) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasStarted) {
@@ -48,16 +40,17 @@ function useCountUp(end: number, duration: number = 2000, startOnView: boolean =
       { threshold: 0.3 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     return () => observer.disconnect();
-  }, [startOnView, hasStarted]);
+  }, [hasStarted]);
 
   useEffect(() => {
     if (!hasStarted) return;
 
+    const duration = 2000;
     let startTime: number;
     let animationFrame: number;
 
@@ -66,64 +59,61 @@ function useCountUp(end: number, duration: number = 2000, startOnView: boolean =
       const progress = Math.min((currentTime - startTime) / duration, 1);
       
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      setCount(Math.floor(easeOutQuart * end));
+      
+      setCounts({
+        profiles: Math.floor(easeOutQuart * 1000),
+        years: Math.floor(easeOutQuart * 50),
+        detection: Math.floor(easeOutQuart * 92)
+      });
 
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate);
       } else {
-        setCount(end);
+        setCounts({ profiles: 1000, years: 50, detection: 92 });
         setIsComplete(true);
       }
     };
 
     animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
-  }, [end, duration, hasStarted]);
-
-  return { count, isComplete, ref };
-}
-
-function MetricsSection() {
-  const profiles = useCountUp(1000, 2000);
-  const years = useCountUp(50, 1800);
-  const detection = useCountUp(92, 2000);
+  }, [hasStarted]);
 
   return (
     <section className="relative z-20 py-20 w-full bg-[#050511]">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div 
-          ref={profiles.ref}
+          ref={sectionRef}
           className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8"
         >
           {/* Metric 1 */}
           <div className="text-center">
-            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${profiles.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
-              {profiles.count.toLocaleString()}+
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {counts.profiles.toLocaleString()}+
             </div>
             <div className="text-lg font-semibold text-white mb-2">Profiles Reviewed</div>
-            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${profiles.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${isComplete ? 'opacity-100' : 'opacity-0'}`}>
               Across student, visitor, and employment-based visa categories
             </p>
           </div>
 
           {/* Metric 2 */}
           <div className="text-center">
-            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${years.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
-              {years.count}+
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {counts.years}+
             </div>
             <div className="text-lg font-semibold text-white mb-2">Years of Digital History Analyzed</div>
-            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${years.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${isComplete ? 'opacity-100' : 'opacity-0'}`}>
               Per applicant, across platforms and timelines
             </p>
           </div>
 
           {/* Metric 3 */}
           <div className="text-center">
-            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${detection.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
-              {detection.count}%
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {counts.detection}%
             </div>
             <div className="text-lg font-semibold text-white mb-2">Issue Detection Rate</div>
-            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${detection.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${isComplete ? 'opacity-100' : 'opacity-0'}`}>
               Applicants discovered at least one clarification-worthy signal
             </p>
           </div>
