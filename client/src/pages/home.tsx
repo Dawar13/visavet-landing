@@ -22,7 +22,116 @@ import reportOverview from "@assets/88b3d51f-8147-4e27-9864-d93b0e1c8ef8_1766964
 import instagramReport from "@assets/Screenshot_2025-12-29_044603_1766964207637.png";
 import sampleReportPdf from "@assets/Visavet_demo_report_1766966205759.pdf";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function useCountUp(end: number, duration: number = 2000, startOnView: boolean = true) {
+  const [count, setCount] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!startOnView) {
+      setHasStarted(true);
+    }
+  }, [startOnView]);
+
+  useEffect(() => {
+    if (!startOnView || hasStarted) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [startOnView, hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+        setIsComplete(true);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, hasStarted]);
+
+  return { count, isComplete, ref };
+}
+
+function MetricsSection() {
+  const profiles = useCountUp(1000, 2000);
+  const years = useCountUp(5, 1800);
+  const detection = useCountUp(92, 2000);
+
+  return (
+    <section className="relative z-20 py-20 w-full bg-[#050511]">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <div 
+          ref={profiles.ref}
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8"
+        >
+          {/* Metric 1 */}
+          <div className="text-center">
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${profiles.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {profiles.count.toLocaleString()}+
+            </div>
+            <div className="text-lg font-semibold text-white mb-2">Profiles Reviewed</div>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${profiles.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+              Across student, visitor, and employment-based visa categories
+            </p>
+          </div>
+
+          {/* Metric 2 */}
+          <div className="text-center">
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${years.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {years.count}+
+            </div>
+            <div className="text-lg font-semibold text-white mb-2">Years of Digital History Analyzed</div>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${years.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+              Per applicant, across platforms and timelines
+            </p>
+          </div>
+
+          {/* Metric 3 */}
+          <div className="text-center">
+            <div className={`text-5xl md:text-6xl font-bold text-white mb-3 transition-all duration-500 ${detection.isComplete ? 'drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]' : ''}`}>
+              {detection.count}%
+            </div>
+            <div className="text-lg font-semibold text-white mb-2">Issue Detection Rate</div>
+            <p className={`text-gray-400 text-sm transition-opacity duration-700 ${detection.isComplete ? 'opacity-100' : 'opacity-0'}`}>
+              Applicants discovered at least one clarification-worthy signal
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const [location, setLocation] = useLocation();
@@ -537,6 +646,9 @@ export default function Home() {
            </div>
          </div>
       </section>
+
+      {/* Metrics Section */}
+      <MetricsSection />
 
       {/* Client Reviews Section */}
       <section id="reviews" className="relative z-20 py-16 w-full bg-[#050511] overflow-hidden">
