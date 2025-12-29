@@ -209,6 +209,58 @@ function MetricsSection() {
   );
 }
 
+function PDFViewerModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      
+      <div 
+        className="relative bg-[#0a0a18] border border-white/10 rounded-2xl w-full max-w-5xl h-[90vh] shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-white/10">
+          <h3 className="text-lg font-semibold text-white">Sample Report</h3>
+          <button 
+            onClick={onClose}
+            className="text-gray-400 hover:text-white transition-colors text-2xl leading-none"
+          >
+            &times;
+          </button>
+        </div>
+        
+        <div className="flex-1 p-4">
+          <iframe
+            src={sampleReportPdf}
+            className="w-full h-full rounded-lg"
+            title="Sample Report PDF"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WaitlistModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -372,6 +424,7 @@ export default function Home() {
   const [openReview, setOpenReview] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -491,7 +544,7 @@ export default function Home() {
               Request Review
             </button>
             <button 
-              onClick={() => scrollToSection('sample-report')}
+              onClick={() => setPdfViewerOpen(true)}
               className="glass text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-white/10 transition-colors"
             >
               View Sample
@@ -936,6 +989,9 @@ export default function Home() {
 
       {/* Waitlist Modal */}
       <WaitlistModal isOpen={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
+
+      {/* PDF Viewer Modal */}
+      <PDFViewerModal isOpen={pdfViewerOpen} onClose={() => setPdfViewerOpen(false)} />
 
     </div>
   );
