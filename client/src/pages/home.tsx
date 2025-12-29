@@ -24,6 +24,92 @@ import sampleReportPdf from "@assets/Visavet_demo_report_1766966205759.pdf";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState, useEffect, useRef } from "react";
 
+const faqData = [
+  {
+    question: "Is this an AI-generated report?",
+    answer: "No. We use technology to surface patterns such as sentiment signals, keyword clusters, timeline overlaps, and cross-platform inconsistencies.\n\nEvery surfaced signal is then reviewed by a human analyst who evaluates context, intent, and how the content may be interpreted without your explanation.\n\nThe final report is written manually and reflects judgment — not automation."
+  },
+  {
+    question: "What exactly do you analyze?",
+    answer: "We analyze your publicly visible digital presence across declared platforms, including posts, bios, interactions, timelines, and cross-platform consistency.\n\nThis includes both signal detection (what stands out) and narrative alignment (how your online story reads as a whole)."
+  },
+  {
+    question: "How long does the review take?",
+    answer: "Most reports are delivered within 4–5 hours.\n\nThis allows sufficient time for both technology-assisted analysis and careful human evaluation, without rushing or auto-generating results."
+  },
+  {
+    question: "Is this a one-time payment?",
+    answer: "Yes. VisaVet is a one-time payment.\n\nAfter your report is delivered, you can return to the portal to request clarifications, follow-up analysis, or future reviews without paying again."
+  },
+  {
+    question: "Can I use this service again in the future?",
+    answer: "Yes. Your access remains open.\n\nIf your online presence changes or you apply for another visa later, you can request an updated analysis through the same portal."
+  },
+  {
+    question: "Will this guarantee my visa approval?",
+    answer: "No service can guarantee visa outcomes.\n\nVisaVet helps reduce uncertainty by identifying how your public digital presence may be interpreted during modern visa screening."
+  },
+  {
+    question: "Do you access private messages or private accounts?",
+    answer: "No. We do not access private messages, DMs, locked profiles, or anything not publicly visible.\n\nOnly public information and profiles you voluntarily disclose are reviewed."
+  },
+  {
+    question: "Should I delete content before using VisaVet?",
+    answer: "We generally advise against sudden deletions.\n\nThe report focuses on interpretive risk and preparation — helping you understand what may require explanation rather than prompting reactive changes."
+  }
+];
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section className="relative z-20 py-20 w-full bg-gradient-to-b from-[#050511] via-[#080818] to-[#050511]">
+      <div className="max-w-3xl mx-auto px-6 md:px-12">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-16 text-center">
+          Frequently Asked Questions
+        </h2>
+
+        <div className="space-y-4">
+          {faqData.map((faq, index) => (
+            <div
+              key={index}
+              className={`rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === index 
+                  ? 'bg-[#0d1025] shadow-[0_0_30px_rgba(59,130,246,0.15)]' 
+                  : 'bg-white/5 hover:bg-white/8'
+              }`}
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full px-8 py-6 text-left flex justify-between items-center gap-4"
+              >
+                <span className={`text-base md:text-lg font-semibold transition-colors duration-300 ${
+                  openIndex === index ? 'text-white' : 'text-gray-200'
+                }`}>
+                  {faq.question}
+                </span>
+                <span className={`text-2xl text-gray-400 transition-transform duration-500 ease-in-out ${
+                  openIndex === index ? 'rotate-45' : ''
+                }`}>
+                  +
+                </span>
+              </button>
+              
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+              }`}>
+                <div className="px-8 pb-8 text-gray-400 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                  {faq.answer}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function MetricsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
@@ -639,6 +725,9 @@ export default function Home() {
 
       {/* Metrics Section */}
       <MetricsSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* Client Reviews Section */}
       <section id="reviews" className="relative z-20 py-16 w-full bg-[#050511] overflow-hidden">
