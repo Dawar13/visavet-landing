@@ -209,11 +209,169 @@ function MetricsSection() {
   );
 }
 
+function WaitlistModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, onClose]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      await fetch('https://formspree.io/f/mqekydzp', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      
+      <div 
+        className="relative bg-[#0a0a18] border border-white/10 rounded-2xl w-full max-w-md p-8 shadow-2xl animate-in zoom-in-95 duration-300"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-2xl leading-none"
+        >
+          &times;
+        </button>
+
+        {isSubmitted ? (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-600/20 flex items-center justify-center">
+              <svg className="w-8 h-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">You're on the list.</h3>
+            <p className="text-gray-400">We'll reach out with next steps.</p>
+          </div>
+        ) : (
+          <>
+            <h3 className="text-2xl font-bold text-white mb-2">Join the Waitlist</h3>
+            <p className="text-gray-400 text-sm mb-8">Get early access to your digital presence review.</p>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Visa Type</label>
+                <select
+                  name="visa_type"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-[#0a0a18]">Select visa type</option>
+                  <option value="B1/B2" className="bg-[#0a0a18]">B1/B2</option>
+                  <option value="F1" className="bg-[#0a0a18]">F1</option>
+                  <option value="H-1B/H-4" className="bg-[#0a0a18]">H-1B/H-4</option>
+                  <option value="Other" className="bg-[#0a0a18]">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Primary Social Platform</label>
+                <select
+                  name="platform"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-[#0a0a18]">Select platform</option>
+                  <option value="Instagram" className="bg-[#0a0a18]">Instagram</option>
+                  <option value="LinkedIn" className="bg-[#0a0a18]">LinkedIn</option>
+                  <option value="X/Twitter" className="bg-[#0a0a18]">X/Twitter</option>
+                  <option value="Reddit" className="bg-[#0a0a18]">Reddit</option>
+                  <option value="Multiple" className="bg-[#0a0a18]">Multiple</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Additional Context (optional)</label>
+                <textarea
+                  name="context"
+                  rows={3}
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+                  placeholder="Any specific concerns or timeline?"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white py-3 rounded-lg font-semibold transition-colors mt-6"
+              >
+                {isSubmitting ? 'Submitting...' : 'Join Waitlist'}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [location, setLocation] = useLocation();
   const [openStep, setOpenStep] = useState<number | null>(null);
   const [openReview, setOpenReview] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -289,7 +447,10 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 md:px-5 py-2 rounded-full text-xs md:text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
+          <button 
+            onClick={() => setWaitlistOpen(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 md:px-5 py-2 rounded-full text-xs md:text-sm font-medium transition-all shadow-lg shadow-blue-900/20"
+          >
             Request Review
           </button>
         </div>
@@ -323,10 +484,16 @@ export default function Home() {
           </p>
 
           <div className="flex items-center justify-center gap-3">
-            <button className="bg-white text-black px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center gap-2">
+            <button 
+              onClick={() => setWaitlistOpen(true)}
+              className="bg-white text-black px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center gap-2"
+            >
               Request Review
             </button>
-            <button className="glass text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-white/10 transition-colors">
+            <button 
+              onClick={() => scrollToSection('sample-report')}
+              className="glass text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-white/10 transition-colors"
+            >
               View Sample
             </button>
           </div>
@@ -766,6 +933,9 @@ export default function Home() {
            </div>
         </div>
       </section>
+
+      {/* Waitlist Modal */}
+      <WaitlistModal isOpen={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
 
     </div>
   );
