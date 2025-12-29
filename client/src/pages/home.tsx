@@ -20,7 +20,7 @@ import facebookLogo from "@assets/3_1766923167509.png";
 import planeImage from "@assets/download_(24)_1766925695539.jpg";
 import reportOverview from "@assets/88b3d51f-8147-4e27-9864-d93b0e1c8ef8_1766964196577.png";
 import instagramReport from "@assets/Screenshot_2025-12-29_044603_1766964207637.png";
-import sampleReportPdf from "@assets/Visavet_demo_report_1766966205759.pdf";
+import sampleReportPdf from "@assets/Visavet_demo_report_1766969533815.pdf";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState, useEffect, useRef } from "react";
 
@@ -314,12 +314,12 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
       
       <div 
-        className="relative bg-[#0a0a18] border border-white/10 rounded-2xl w-full max-w-md p-8 shadow-2xl animate-in zoom-in-95 duration-300"
+        className="relative bg-[#0a0a18] border border-white/10 rounded-2xl w-full max-w-md p-8 shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-2xl leading-none"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-2xl leading-none z-10"
         >
           &times;
         </button>
@@ -406,7 +406,8 @@ function WaitlistModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white py-3 rounded-lg font-semibold transition-colors mt-6"
+                data-testid="button-submit-waitlist"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white py-4 rounded-lg font-semibold transition-colors mt-8 mb-2"
               >
                 {isSubmitting ? 'Submitting...' : 'Join Waitlist'}
               </button>
