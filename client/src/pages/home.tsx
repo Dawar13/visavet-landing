@@ -85,7 +85,7 @@ function useCountUp(end: number, duration: number = 2000, startOnView: boolean =
 
 function MetricsSection() {
   const profiles = useCountUp(1000, 2000);
-  const years = useCountUp(5, 1800);
+  const years = useCountUp(50, 1800);
   const detection = useCountUp(92, 2000);
 
   return (
